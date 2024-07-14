@@ -1,5 +1,5 @@
 $date
-	Sun Jul 14 22:48:36 2024
+	Sun Jul 14 22:55:54 2024
 $end
 $version
 	Icarus Verilog
@@ -9,10 +9,17 @@ $timescale
 $end
 $scope module main_tb $end
 $var wire 5 ! out [4:0] $end
-$var reg 10 " x [9:0] $end
+$var wire 2 " mode_out [1:0] $end
+$var reg 1 # sel $end
+$var reg 10 $ x [9:0] $end
+$scope module dmx $end
+$var wire 1 % Press_in $end
+$var wire 1 # select $end
+$var reg 2 & Mode_out [1:0] $end
+$upscope $end
 $scope module enc $end
-$var wire 10 # D_in [9:0] $end
-$var reg 5 $ BCD_out [4:0] $end
+$var wire 10 ' D_in [9:0] $end
+$var reg 5 ( BCD_out [4:0] $end
 $upscope $end
 $upscope $end
 $enddefinitions $end
@@ -21,38 +28,54 @@ $dumpall
 $end
 #0
 $dumpvars
+b0 (
+b0 '
+b0 &
+0%
 b0 $
-b0 #
+0#
 b0 "
 b0 !
 $end
 #5
-b10000 !
-b10000 $
 b1 "
-b1 #
+b1 &
+1%
+b10000 !
+b10000 (
+b1 $
+b1 '
 #10
 b10001 !
-b10001 $
-b11 "
-b11 #
+b10001 (
+b11 $
+b11 '
 #15
 b10000 !
-b10000 $
-b1 "
-b1 #
+b10000 (
+b1 $
+b1 '
 #20
-b0 !
-b0 $
 b0 "
-b0 #
+b0 &
+0%
+b0 !
+b0 (
+b0 $
+b0 '
 #25
+b1 "
+b1 &
+1%
 b11001 !
-b11001 $
-b1000000000 "
-b1000000000 #
+b11001 (
+b1000000000 $
+b1000000000 '
 #30
-b0 !
-b0 $
 b0 "
-b0 #
+b0 &
+0%
+b0 !
+b0 (
+b0 $
+b0 '
