@@ -39,7 +39,7 @@ module t_ff (output reg q, output qbar, input clk, rst, t);
 
 	assign qbar = ~q;
 
-	always @(clk)
+	always @(posedge clk)
 	begin
 		if (rst)
 			q <= 0;
@@ -49,6 +49,12 @@ module t_ff (output reg q, output qbar, input clk, rst, t);
 				1'b1: q <= ~q;
 			endcase
 	end
+
+    always @(negedge clk)
+    begin
+        if (rst)
+			q <= 0;
+    end
 endmodule
 
 // Design of a T-FF circuit ~ makes use of Gate-Level Modelling

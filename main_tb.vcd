@@ -1,5 +1,5 @@
 $date
-	Mon Jul 15 16:13:51 2024
+	Mon Jul 15 17:02:36 2024
 $end
 $version
 	Icarus Verilog
@@ -8,15 +8,15 @@ $timescale
 	1ns
 $end
 $scope module main_tb $end
-$var wire 1 ! qbar3 $end
-$var wire 1 " qbar2 $end
-$var wire 1 # qbar1 $end
-$var wire 1 $ q3 $end
-$var wire 1 % q2 $end
-$var wire 1 & q1 $end
+$var wire 1 ! qbar3_ui $end
+$var wire 1 " qbar2_ui $end
+$var wire 1 # qbar1_ui $end
+$var wire 1 $ q3_ui $end
+$var wire 1 % q2_ui $end
+$var wire 1 & q1_ui $end
 $var wire 5 ' out [4:0] $end
 $var wire 2 ( mode_out [1:0] $end
-$var reg 1 ) reset $end
+$var reg 1 ) rst_ui $end
 $var reg 1 * sel $end
 $var reg 1 + t $end
 $var reg 10 , x [9:0] $end
@@ -29,7 +29,7 @@ $scope module enc $end
 $var wire 10 / D_in [9:0] $end
 $var reg 5 0 BCD_out [4:0] $end
 $upscope $end
-$scope module uut $end
+$scope module input_t_ff $end
 $var wire 1 1 clk $end
 $var wire 1 & q1 $end
 $var wire 1 # qbar1 $end
@@ -95,9 +95,7 @@ $end
 #2
 0)
 #7
-0!
 0"
-1$
 1%
 0#
 02
@@ -112,14 +110,6 @@ b10000 0
 b1 ,
 b1 /
 #12
-1!
-1"
-0$
-0%
-1#
-12
-0&
-03
 01
 b0 (
 b0 .
@@ -130,13 +120,11 @@ b0 ,
 b0 /
 #17
 0!
-0"
 1$
-1%
-0#
-02
-1&
-13
+1#
+12
+0&
+03
 11
 b1 (
 b1 .
@@ -146,14 +134,6 @@ b10001 0
 b10 ,
 b10 /
 #22
-1!
-1"
-0$
-0%
-1#
-12
-0&
-03
 01
 b0 (
 b0 .
@@ -163,10 +143,8 @@ b0 0
 b0 ,
 b0 /
 #27
-0!
-0"
-1$
-1%
+1"
+0%
 0#
 02
 1&
@@ -180,14 +158,6 @@ b11001 0
 b1000000000 ,
 b1000000000 /
 #32
-1!
-1"
-0$
-0%
-1#
-12
-0&
-03
 01
 b0 (
 b0 .
@@ -196,4 +166,28 @@ b0 '
 b0 0
 b0 ,
 b0 /
-#52
+#37
+1!
+0$
+1#
+12
+0&
+03
+11
+b1 (
+b1 .
+1-
+b10111 '
+b10111 0
+b10000000 ,
+b10000000 /
+#42
+01
+b0 (
+b0 .
+0-
+b0 '
+b0 0
+b0 ,
+b0 /
+#62
