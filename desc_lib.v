@@ -39,7 +39,7 @@ module t_ff (output reg q, output qbar, input clk, rst, t);
 
 	assign qbar = ~q;
 
-	always @(posedge clk)
+	always @(clk)
 	begin
 		if (rst)
 			q <= 0;
@@ -52,13 +52,22 @@ module t_ff (output reg q, output qbar, input clk, rst, t);
 endmodule
 
 // Design of a T-FF circuit ~ makes use of Gate-Level Modelling
-module t_ff_circuit (output clk1, clk2, clk3, clk4, input clk, rst, t);
+module t_ff_circuit (output wire q1, q2, q3, qbar1, qbar2, qbar3, input clk, rst, t);
 
-    wire wire_t2, wire_t3; 
-
-    t_ff t1(wire_t2, wire_t3, clk, reset, t);
-    t_ff t2(clk1, clk3, wire_t2, reset, t);
-    t_ff t3(clk2, clk4, wire_t3, reset, t);
-
+    // Internal wires for clock connections
+    wire t1_q, t1_qbar;
+    
+    // Instantiate the first T flip-flop
+    t_ff t1 (t1_q, t1_qbar, clk, rst, t);
+    
+    // Instantiate the second T flip-flop, clocked by q of the first flip-flop
+    t_ff t2 (q2, qbar2, t1_q, rst, t);
+    
+    // Instantiate the third T flip-flop, clocked by qbar of the first flip-flop
+    t_ff t3 (q3, qbar3, t1_qbar, rst, t);
+    
+    // Output assignments
+    assign q1 = t1_q;
+    assign qbar1 = t1_qbar;
 
 endmodule
