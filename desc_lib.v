@@ -33,3 +33,32 @@ module demux1_2 (output reg [1:0] Mode_out, input Press_in, input select);
     end
 
 endmodule
+
+// Design of a T flipflops for clocking the memory for inputs sequentially - makes use of Behavioural Description
+module t_ff (output reg q, output qbar, input clk, rst, t);
+
+	assign qbar = ~q;
+
+	always @(posedge clk)
+	begin
+		if (rst)
+			q <= 0;
+		else
+			case(t)
+				1'b0: q <= q;
+				1'b1: q <= ~q;
+			endcase
+	end
+endmodule
+
+// Design of a T-FF circuit ~ makes use of Gate-Level Modelling
+module t_ff_circuit (output clk1, clk2, clk3, clk4, input clk, rst, t);
+
+    wire wire_t2, wire_t3; 
+
+    t_ff t1(wire_t2, wire_t3, clk, reset, t);
+    t_ff t2(clk1, clk3, wire_t2, reset, t);
+    t_ff t3(clk2, clk4, wire_t3, reset, t);
+
+
+endmodule
