@@ -48,6 +48,10 @@ module main_tb;
         #5 x[9]=0;
         #5 x[7]=1;
         #5 x[7]=0;
+        #5 rst_ui = 1;
+        #5 rst_ui = 0;
+        #5 x[5]=1;
+        #5 x[5]=0;
         #20 $finish;
 
     end

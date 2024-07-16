@@ -75,26 +75,27 @@ endmodule
 
 module univ_shift_reg (output reg [3:0] reg_out, input clock, reset, input [1:0] reg_mode, input [3:0] reg_in);
 
-  always @(posedge clock)
-  begin
-    if(reset)
-      reg_out <= 0;
-    else
-      begin
-        case(reg_mode)
-          2'b00 : reg_out <= reg_out;      // locked mode, do nothing
-          2'b01 : reg_out <= {reg_in[0], reg_out[3:1]};//reg_out >> 1; // RFSR
-          2'b10 : reg_out <= {reg_out[2:0], reg_in[0]};//reg_out << 1; // LFSR
-          2'b11 : reg_out <= reg_in;       // parallel in parallel out
+    always @(reset) begin
+        case (reset)
+            1'b1: reg_out = 4'b0000;
+            default: reg_out = reg_out;
         endcase
-      end
-  end
+    end
 
-  always @(negedge clock)
-  begin
-    if(reset)
-        reg_out <= 0;
-  end
+    always @(posedge clock)
+    begin
+        if(reset)
+        reg_out <= 4'b0000;
+        else
+        begin
+            case(reg_mode)
+            2'b00 : reg_out <= reg_out;      // locked mode, do nothing
+            2'b01 : reg_out <= {reg_in[0], reg_out[3:1]};//reg_out >> 1; // RFSR
+            2'b10 : reg_out <= {reg_out[2:0], reg_in[0]};//reg_out << 1; // LFSR
+            2'b11 : reg_out <= reg_in;       // parallel in parallel out
+            endcase
+        end
+    end
   
 endmodule
 
