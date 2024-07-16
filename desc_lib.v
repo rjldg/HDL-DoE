@@ -20,7 +20,7 @@ module input_encoder (input [9:0] D_in, output reg [4:0] BCD_out);
 
 endmodule
 
-// Design of 1-2 Demultiplexer for clocking JK flip-flops - makes use of Behavioural Description
+// Design of 1-2 Demultiplexer for clocking T flip-flops - makes use of Behavioural Description
 module demux1_2 (output reg [1:0] Mode_out, input Press_in, input select);
 
     always @(Press_in, select) begin
@@ -60,20 +60,51 @@ endmodule
 // Design of a T-FF circuit ~ makes use of Gate-Level Modelling
 module t_ff_circuit (output wire q1, q2, q3, qbar1, qbar2, qbar3, input clk, rst, t);
 
-    // Internal wires for clock connections
     wire t1_q, t1_qbar;
     
-    // Instantiate the first T flip-flop
     t_ff t1 (t1_q, t1_qbar, clk, rst, t);
     
-    // Instantiate the second T flip-flop, clocked by q of the first flip-flop
     t_ff t2 (q2, qbar2, t1_q, rst, t);
-    
-    // Instantiate the third T flip-flop, clocked by qbar of the first flip-flop
+
     t_ff t3 (q3, qbar3, t1_qbar, rst, t);
     
-    // Output assignments
     assign q1 = t1_q;
     assign qbar1 = t1_qbar;
+
+endmodule
+
+module univ_shift_reg (output reg [3:0] reg_out, input clock, reset, input [1:0] reg_mode, input [3:0] reg_in);
+
+  always @(posedge clock)
+  begin
+    if(reset)
+      reg_out <= 0;
+    else
+      begin
+        case(reg_mode)
+          2'b00 : reg_out <= reg_out;      // locked mode, do nothing
+          2'b01 : reg_out <= {reg_in[0], reg_out[3:1]};//reg_out >> 1; // RFSR
+          2'b10 : reg_out <= {reg_out[2:0], reg_in[0]};//reg_out << 1; // LFSR
+          2'b11 : reg_out <= reg_in;       // parallel in parallel out
+        endcase
+      end
+  end
+
+  always @(negedge clock)
+  begin
+    if(reset)
+        reg_out <= 0;
+  end
+  
+endmodule
+
+module shift_reg_array (input clk1, clk2, clk3, clk4, clear,
+    input [3:0] reg_in1, input [3:0] reg_in2, input [3:0] reg_in3, input [3:0] reg_in4, input [1:0] reg_mode, 
+    output [3:0] reg_out1, output [3:0] reg_out2, output [3:0] reg_out3, output [3:0] reg_out4);
+
+    univ_shift_reg reg1(reg_out1, clk1, clear, reg_mode, reg_in1);
+    univ_shift_reg reg2(reg_out2, clk2, clear, reg_mode, reg_in2);
+    univ_shift_reg reg3(reg_out3, clk3, clear, reg_mode, reg_in3);
+    univ_shift_reg reg4(reg_out4, clk4, clear, reg_mode, reg_in4);
 
 endmodule
