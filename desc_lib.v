@@ -73,6 +73,34 @@ module t_ff_circuit (output wire q1, q2, q3, qbar1, qbar2, qbar3, input clk, rst
 
 endmodule
 
+module t_ff_circuit_upscaled (output wire q1, q2, q3, q4, q5, q6, q7,
+    qbar1, qbar2, qbar3, qbar4, qbar5, qbar6, qbar7, input clk, rst, t);
+
+    wire t1_q, t1_qbar, t2_q, t2_qbar, t3_q, t3_qbar;
+
+    t_ff t1 (t1_q, t1_qbar, clk, rst, t);
+
+    t_ff t2 (t2_q, t2_qbar, t1_q, rst, t);
+
+    t_ff t3 (t3_q, t3_qbar, t1_qbar, rst, t);
+    
+    t_ff t4 (q4, qbar4, t2_q, rst, t);
+
+    t_ff t5 (q5, qbar5, t2_qbar, rst, t);
+
+    t_ff t6 (q6, qbar6, t3_q, rst, t);
+
+    t_ff t7 (q7, qbar7, t3_qbar, rst, t);
+
+    assign q1 = t1_q;
+    assign qbar1 = t1_qbar;
+    assign q2 = t2_q;
+    assign qbar2 = t2_qbar;
+    assign q3 = t3_q;
+    assign qbar3 = t3_qbar;
+    
+endmodule
+
 module univ_shift_reg (output reg [3:0] reg_out, input clock, reset, input [1:0] reg_mode, input [3:0] reg_in);
 
     always @(reset) begin
@@ -107,5 +135,18 @@ module shift_reg_array (input clk1, clk2, clk3, clk4, clear,
     univ_shift_reg reg2(reg_out2, clk2, clear, reg_mode, reg_in2);
     univ_shift_reg reg3(reg_out3, clk3, clear, reg_mode, reg_in3);
     univ_shift_reg reg4(reg_out4, clk4, clear, reg_mode, reg_in4);
+
+endmodule
+
+module shift_reg_array_upscaled (input clk1, clk2, clk3, clk4, clk5, clk6, clear,
+    input [3:0] reg_in1, input [3:0] reg_in2, input [3:0] reg_in3, input [3:0] reg_in4, input [3:0] reg_in5, input [3:0] reg_in6, input [1:0] reg_mode, 
+    output [3:0] reg_out1, output [3:0] reg_out2, output [3:0] reg_out3, output [3:0] reg_out4, output [3:0] reg_out5, output [3:0] reg_out6);
+
+    univ_shift_reg reg1(reg_out1, clk1, clear, reg_mode, reg_in1);
+    univ_shift_reg reg2(reg_out2, clk2, clear, reg_mode, reg_in2);
+    univ_shift_reg reg3(reg_out3, clk3, clear, reg_mode, reg_in3);
+    univ_shift_reg reg4(reg_out4, clk4, clear, reg_mode, reg_in4);
+    univ_shift_reg reg5(reg_out5, clk5, clear, reg_mode, reg_in5);
+    univ_shift_reg reg6(reg_out6, clk6, clear, reg_mode, reg_in6);
 
 endmodule
