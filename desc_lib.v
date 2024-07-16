@@ -138,9 +138,9 @@ module shift_reg_array (input clk1, clk2, clk3, clk4, clear,
 
 endmodule
 
-module shift_reg_array_upscaled (input clk1, clk2, clk3, clk4, clk5, clk6, clear,
-    input [3:0] reg_in1, input [3:0] reg_in2, input [3:0] reg_in3, input [3:0] reg_in4, input [3:0] reg_in5, input [3:0] reg_in6, input [1:0] reg_mode, 
-    output [3:0] reg_out1, output [3:0] reg_out2, output [3:0] reg_out3, output [3:0] reg_out4, output [3:0] reg_out5, output [3:0] reg_out6);
+module shift_reg_array_upscaled (input clk1, clk2, clk3, clk4, clk5, clk6, clk7, clk8, clear,
+    input [3:0] reg_in1, input [3:0] reg_in2, input [3:0] reg_in3, input [3:0] reg_in4, input [3:0] reg_in5, input [3:0] reg_in6, input [3:0] reg_in7, input [3:0] reg_in8, input [1:0] reg_mode, 
+    output [3:0] reg_out1, output [3:0] reg_out2, output [3:0] reg_out3, output [3:0] reg_out4, output [3:0] reg_out5, output [3:0] reg_out6, output [3:0] reg_out7, output [3:0] reg_out8);
 
     univ_shift_reg reg1(reg_out1, clk1, clear, reg_mode, reg_in1);
     univ_shift_reg reg2(reg_out2, clk2, clear, reg_mode, reg_in2);
@@ -148,5 +148,7 @@ module shift_reg_array_upscaled (input clk1, clk2, clk3, clk4, clk5, clk6, clear
     univ_shift_reg reg4(reg_out4, clk4, clear, reg_mode, reg_in4);
     univ_shift_reg reg5(reg_out5, clk5, clear, reg_mode, reg_in5);
     univ_shift_reg reg6(reg_out6, clk6, clear, reg_mode, reg_in6);
+    univ_shift_reg reg7(reg_out7, clk7, clear, reg_mode, reg_in7);
+    univ_shift_reg reg8(reg_out8, clk8, clear, reg_mode, reg_in8);
 
 endmodule
