@@ -27,7 +27,7 @@ module main_tb;
         $dumpfile("main_tb.vcd"); $dumpvars(0, main_tb);
 
         $display("*** SIMULATING INPUT ENCODER ***");
-        $display("\t BCD Output\t   Keypad Input\t    Demux Output\t\t     TFF Output\t\t\t\t\t       Shift Register Output");
+        $display("\t BCD Output\t   Keypad Input\t    Demux Output\t\t     TFF Output\t\t\t\t\t\t\t\t\t       Shift Register Output");
         $monitor("\t   %b\t    %b\t         %b\t\t     clk1=%b, clk2=%b, clk3=%b, clk4=%b, clk5=%b, clk6=%b\t\t       SR1=%b, SR2=%b, SR3=%b, SR4=%b, SR5=%b, SR6=%b", out, x, mode_out, q4_ui, q6_ui, q5_ui, q7_ui, qbar4_ui, qbar6_ui, reg_out1, reg_out2, reg_out3, reg_out4, reg_out5, reg_out6);
 
         x[0]=0; x[1]=0; x[2]=0; x[3]=0; x[4]=0; 
