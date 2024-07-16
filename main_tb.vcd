@@ -1,5 +1,5 @@
 $date
-	Tue Jul 16 18:32:45 2024
+	Tue Jul 16 18:53:56 2024
 $end
 $version
 	Icarus Verilog
@@ -799,4 +799,67 @@ b0 7
 b0 @
 b0 <
 b0 ?
-#102
+#87
+b1 (
+b1 Q
+b1 T
+0,
+13
+0.
+0m
+15
+1n
+0/
+0o
+16
+1p
+1j
+b1 8
+b1 >
+b1 H
+b1 g
+b1 G
+b1 d
+b1 F
+b1 a
+b1 E
+b1 ^
+b1 D
+b1 [
+b1 C
+b1 X
+b1 B
+b1 U
+b1 A
+b1 R
+1=
+b10001 7
+b10001 @
+b10 <
+b10 ?
+#92
+0j
+b0 8
+b0 >
+b0 H
+b0 g
+b0 G
+b0 d
+b0 F
+b0 a
+b0 E
+b0 ^
+b0 D
+b0 [
+b0 C
+b0 X
+b0 B
+b0 U
+b0 A
+b0 R
+0=
+b0 7
+b0 @
+b0 <
+b0 ?
+#112
