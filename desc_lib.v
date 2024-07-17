@@ -152,3 +152,9 @@ module shift_reg_array_upscaled (input clk1, clk2, clk3, clk4, clk5, clk6, clk7,
     univ_shift_reg reg8(reg_out8, clk8, clear, reg_mode, reg_in8);
 
 endmodule
+
+module eq_32_bit_comparator (input [31:0] in_1, in_2, output eq);
+
+    assign eq = (in_1==in_2);
+
+endmodule
