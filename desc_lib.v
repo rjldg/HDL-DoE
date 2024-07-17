@@ -158,3 +158,16 @@ module eq_32_bit_comparator (input [31:0] in_1, in_2, output eq);
     assign eq = (in_1==in_2);
 
 endmodule
+
+module attempt_bcd_counter (input reset, clk, output reg [3:0] count);
+
+    always @(posedge clk) begin
+
+        if (reset)
+            count <= 4'b0000;
+        else
+            count <= count + 4'b0001;
+
+    end
+
+endmodule
