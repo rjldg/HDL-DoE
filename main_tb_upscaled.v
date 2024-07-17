@@ -35,6 +35,7 @@ module main_tb;
     */
 
     initial begin
+
         $dumpfile("main_tb.vcd"); $dumpvars(0, main_tb);
 
         $display("*** SIMULATING INPUT ENCODER ***");
@@ -49,13 +50,17 @@ module main_tb;
         rst_ui = 1;
         rst_attempts = 1;
         rst_sp = 1;
-        
-        fork
+
+    end
+
+    initial fork
             #1 t = 1;
             #1 rst_ui = 0;
             #1 rst_sp = 0;
             #1 rst_attempts = 0;
-        join   
+    join   
+
+    initial begin
 
         #5 x[2]=1;
         #5 x[2]=0;
