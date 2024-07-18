@@ -51,7 +51,7 @@ module doe_tb_verbose;
 
     output_circuit out_circ(alarm, unlocked, alarm_not_on, comp_out, rst_alarm, attempt_count[0], attempt_count[2], sel[1]);
     
-    bcd_to_7seg display_circ(out, seg_out);
+    bcd_to_7seg display_circ({mode_out[0], out[3:0]}, seg_out);
     
     // 5ns clock for testing purposes only
     /*
