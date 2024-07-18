@@ -9,7 +9,7 @@ Group Members:
 4. DE GUZMAN, Rance Jacob
 5. DE PEÑA, Vince Samuel
 
-## 💹 Requirements
+## ✅ Requirements
 
 1. This project aims to solve the need for advanced security measures by introducing an 8-digit digital passcode lock with attempts, an alarm, and 7-segment displays that can be used on a variety of applications (doorlock, safe/vault lock, etc.).
 2. _Refer to the documentation for the truth table_
