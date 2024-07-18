@@ -173,14 +173,14 @@ module d_ff (output reg q, output qbar, input clk, rst, d);
 
 	assign qbar = ~q;
 
-	always @(posedge clk)
+	always @(posedge clk, negedge rst)
 	begin
 		if (rst)
 			q <= 0;
 		else
 			q <= d;
 	end
-
+    
 endmodule
 
 module output_circuit (output alarm, unlocked, qbar, input is_equal, reset_alarm, bit_0, bit_2);
