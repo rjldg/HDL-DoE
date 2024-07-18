@@ -52,6 +52,8 @@ module doe_tb_verbose;
     output_circuit out_circ(alarm, unlocked, alarm_not_on, comp_out, rst_alarm, attempt_count[0], attempt_count[2], sel[1]);
     
     bcd_to_7seg display_circ(out, seg_out);
+    
+    // 5ns clock for testing purposes only
     /*
     initial begin
         clk = 0;
@@ -63,7 +65,7 @@ module doe_tb_verbose;
 
         $dumpfile("doe_tb_verbose.vcd"); $dumpvars(0, doe_tb_verbose);
 
-        $display("*** SIMULATING HDL DESIGN OF EXPERIMENT ***");
+        $display("\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t*** SIMULATING HDL DESIGN OF EXPERIMENT: 8-DIGIT DIGITAL PASSCODE LOCK WITH ATTEMPTS, ALARM, AND 7-SEGMENT DISPLAY ***\n");
         $display("\t BCD Output\t   Keypad Input\t    Demux Output\t\t\t\t     TFF Output\t\t\t\t\t\t\t\t\t        (UI) Shift Register Output\t\t\t\t\t\t\t\t        (SP) Shift Register Output\t\t\t\t  Comparator Output\t   Attempt\t Unlocked  Alarm     7-Segment Display (abcdefg)");
         $monitor("\t   %b\t    %b\t         %b\t\t     clk1=%b, clk2=%b, clk3=%b, clk4=%b, clk5=%b, clk6=%b, clk7=%b, clk8=%b\t\t       SR1=%b, SR2=%b, SR3=%b, SR4=%b, SR5=%b, SR6=%b, SR7=%b, SR8=%b\t\t       SR1=%b, SR2=%b, SR3=%b, SR4=%b, SR5=%b, SR6=%b, SR7=%b, SR8=%b\t\t   %b\t\t    %b\t     %b\t     %b\t\t      %b", out, x, mode_out, q4_ui, q6_ui, q5_ui, q7_ui, qbar4_ui, qbar6_ui, qbar5_ui, qbar7_ui, reg_out1, reg_out2, reg_out3, reg_out4, reg_out5, reg_out6, reg_out7, reg_out8, sp_reg_out1, sp_reg_out2, sp_reg_out3, sp_reg_out4, sp_reg_out5, sp_reg_out6, sp_reg_out7, sp_reg_out8, comp_out, attempt_count, unlocked, alarm, seg_out);
     
