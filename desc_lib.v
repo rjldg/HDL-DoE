@@ -57,15 +57,12 @@ module t_ff (output reg q, output qbar, input clk, rst, t);
     end
 endmodule
 
-// Design of a T-FF circuit ~ makes use of Gate-Level Modelling
+// Design of a T-FF circuit for 4-bit storage clocking ~ makes use of Gate-Level and Dataflow Modeling
 module t_ff_circuit (output wire q1, q2, q3, qbar1, qbar2, qbar3, input clk, rst, t);
 
     wire t1_q, t1_qbar;
-    
     t_ff t1 (t1_q, t1_qbar, clk, rst, t);
-    
     t_ff t2 (q2, qbar2, t1_q, rst, t);
-
     t_ff t3 (q3, qbar3, t1_qbar, rst, t);
     
     assign q1 = t1_q;
@@ -73,23 +70,18 @@ module t_ff_circuit (output wire q1, q2, q3, qbar1, qbar2, qbar3, input clk, rst
 
 endmodule
 
+// Design of a T-FF circuit for 8-bit storage clocking ~ makes use of Gate-Level and Dataflow Modeling
 module t_ff_circuit_upscaled (output wire q1, q2, q3, q4, q5, q6, q7,
     qbar1, qbar2, qbar3, qbar4, qbar5, qbar6, qbar7, input clk, rst, t);
 
     wire t1_q, t1_qbar, t2_q, t2_qbar, t3_q, t3_qbar;
 
     t_ff t1 (t1_q, t1_qbar, clk, rst, t);
-
     t_ff t2 (t2_q, t2_qbar, t1_q, rst, t);
-
     t_ff t3 (t3_q, t3_qbar, t1_qbar, rst, t);
-    
     t_ff t4 (q4, qbar4, t2_q, rst, t);
-
     t_ff t5 (q5, qbar5, t2_qbar, rst, t);
-
     t_ff t6 (q6, qbar6, t3_q, rst, t);
-
     t_ff t7 (q7, qbar7, t3_qbar, rst, t);
 
     assign q1 = t1_q;
@@ -98,9 +90,10 @@ module t_ff_circuit_upscaled (output wire q1, q2, q3, q4, q5, q6, q7,
     assign qbar2 = t2_qbar;
     assign q3 = t3_q;
     assign qbar3 = t3_qbar;
-    
+
 endmodule
 
+// Design of a universal shift register for BCD memory storage ~ makes use of Behavioural Modeling
 module univ_shift_reg (output reg [3:0] reg_out, input clock, reset, input [1:0] reg_mode, input [3:0] reg_in);
 
     always @(reset) begin
@@ -127,6 +120,7 @@ module univ_shift_reg (output reg [3:0] reg_out, input clock, reset, input [1:0]
   
 endmodule
 
+// Design of a univeral shift register array for 4-digit BCD storage ~ makes use of Gate-level Modeling
 module shift_reg_array (input clk1, clk2, clk3, clk4, clear,
     input [3:0] reg_in1, input [3:0] reg_in2, input [3:0] reg_in3, input [3:0] reg_in4, input [1:0] reg_mode, 
     output [3:0] reg_out1, output [3:0] reg_out2, output [3:0] reg_out3, output [3:0] reg_out4);
@@ -138,6 +132,7 @@ module shift_reg_array (input clk1, clk2, clk3, clk4, clear,
 
 endmodule
 
+// Design of a univeral shift register array for 8-digit BCD storage ~ makes use of Gate-level Modeling
 module shift_reg_array_upscaled (input clk1, clk2, clk3, clk4, clk5, clk6, clk7, clk8, clear,
     input [3:0] reg_in1, input [3:0] reg_in2, input [3:0] reg_in3, input [3:0] reg_in4, input [3:0] reg_in5, input [3:0] reg_in6, input [3:0] reg_in7, input [3:0] reg_in8, input [1:0] reg_mode, 
     output [3:0] reg_out1, output [3:0] reg_out2, output [3:0] reg_out3, output [3:0] reg_out4, output [3:0] reg_out5, output [3:0] reg_out6, output [3:0] reg_out7, output [3:0] reg_out8);
@@ -153,12 +148,14 @@ module shift_reg_array_upscaled (input clk1, clk2, clk3, clk4, clk5, clk6, clk7,
 
 endmodule
 
+// Design of a 32-bit to 32-bit comparator for comparing secured password and user-inputted password ~ makes use of Dataflow Modeling
 module eq_32_bit_comparator (input [31:0] in_1, in_2, output eq);
 
     assign eq = (in_1==in_2);
 
 endmodule
 
+// Design of a attempt counter in BCD ~ makes use of Behavioural Modeling
 module attempt_bcd_counter (input reset, clk, output reg [3:0] count);
 
     always @(posedge clk) begin
@@ -169,5 +166,29 @@ module attempt_bcd_counter (input reset, clk, output reg [3:0] count);
             count <= count + 4'b0001;
 
     end
+
+endmodule
+
+module d_ff (output reg q, output qbar, input clk, rst, d);
+
+	assign qbar = ~q;
+
+	always @(posedge clk)
+	begin
+		if (rst)
+			q <= 0;
+		else
+			q <= d;
+	end
+
+endmodule
+
+module output_circuit (output alarm, unlocked, qbar, input is_equal, reset_alarm, bit_0, bit_2);
+
+    wire w1, w2;
+
+    d_ff d1(alarm, qbar, w2, reset_alarm, w2);
+    not NOT1(w1, is_equal);
+    and AND1(w2, bit_0, bit_2, w1), AND2(unlocked, qbar, is_equal);
 
 endmodule
