@@ -21,13 +21,13 @@ module input_encoder (input [9:0] D_in, output reg [4:0] BCD_out);
 endmodule
 
 // Design of 1-2 Demultiplexer for clocking T flip-flops - makes use of Behavioural Description
-module demux1_2 (output reg [1:0] Mode_out, input Press_in, input select);
+module demux1_2 (output reg [1:0] Mode_out, input Press_in, input [1:0] select);
 
     always @(Press_in, select) begin
         Mode_out = 2'b00;
         case (select)
-            1'b0: Mode_out[0] = Press_in;
-            1'b1: Mode_out[1] = Press_in;
+            2'b00: Mode_out[0] = Press_in;
+            2'b01: Mode_out[1] = Press_in;
             default: Mode_out = 2'b00;
         endcase
     end
@@ -169,9 +169,11 @@ module attempt_bcd_counter (input reset, clk, output reg [3:0] count);
 
 endmodule
 
+// Design of a D-Flipflop for triggering the alarm effectively ~ makes use of Behavioural Modeling
 module d_ff (output reg q, output qbar, input clk, rst, d);
 
 	assign qbar = ~q;
+    initial q = 0;
 
 	always @(posedge clk, negedge rst)
 	begin
@@ -180,15 +182,16 @@ module d_ff (output reg q, output qbar, input clk, rst, d);
 		else
 			q <= d;
 	end
-    
+
 endmodule
 
-module output_circuit (output alarm, unlocked, qbar, input is_equal, reset_alarm, bit_0, bit_2);
+// Design of the output circuit to trigger the alarm or unlocked output state ~ makes use of Gate-level Modeling
+module output_circuit (output alarm, unlocked, qbar, input is_equal, reset_alarm, bit_0, bit_2, is_null);
 
-    wire w1, w2;
+    wire w1, w2, w3;
 
     d_ff d1(alarm, qbar, w2, reset_alarm, w2);
-    not NOT1(w1, is_equal);
-    and AND1(w2, bit_0, bit_2, w1), AND2(unlocked, qbar, is_equal);
+    not NOT1(w1, is_equal), NOT(w3, is_null);
+    and AND1(w2, bit_0, bit_2, w1, w3), AND2(unlocked, qbar, is_equal, w3);
 
 endmodule
