@@ -111,8 +111,8 @@ module univ_shift_reg (output reg [3:0] reg_out, input clock, reset, input [1:0]
         begin
             case(reg_mode)
             2'b00 : reg_out <= reg_out;      // locked mode, do nothing
-            2'b01 : reg_out <= {reg_in[0], reg_out[3:1]};//reg_out >> 1; // RFSR
-            2'b10 : reg_out <= {reg_out[2:0], reg_in[0]};//reg_out << 1; // LFSR
+            2'b01 : reg_out <= {reg_in[0], reg_out[3:1]}; //reg_out >> 1; // RFSR
+            2'b10 : reg_out <= {reg_out[2:0], reg_in[0]}; //reg_out << 1; // LFSR
             2'b11 : reg_out <= reg_in;       // parallel in parallel out
             endcase
         end
@@ -195,3 +195,26 @@ module output_circuit (output alarm, unlocked, qbar, input is_equal, reset_alarm
     and AND1(w2, bit_0, bit_2, w1, w3), AND2(unlocked, qbar, is_equal, w3);
 
 endmodule
+
+// Design of a BCD to 7-segment decoder resembling the output display ~ makes use of Behavioural Modeling
+module bcd_to_7seg (input [4:0] bcd, output reg [6:0] seg );
+
+    always @(bcd) begin
+        case (bcd)
+            5'b10000: seg = 7'b1111110; // 0
+            5'b10001: seg = 7'b0110000; // 1
+            5'b10010: seg = 7'b1101101; // 2
+            5'b10011: seg = 7'b1111001; // 3
+            5'b10100: seg = 7'b0110011; // 4
+            5'b10101: seg = 7'b1011011; // 5
+            5'b10110: seg = 7'b1011111; // 6
+            5'b10111: seg = 7'b1110000; // 7
+            5'b11000: seg = 7'b1111111; // 8
+            5'b11001: seg = 7'b1111011; // 9
+            default: seg = 7'b0000000; // Invalid input
+        endcase
+    end
+
+endmodule
+
+
