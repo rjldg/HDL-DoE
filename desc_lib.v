@@ -197,21 +197,22 @@ module output_circuit (output alarm, unlocked, qbar, input is_equal, reset_alarm
 endmodule
 
 // Design of a BCD to 7-segment decoder resembling the output display ~ makes use of Behavioural Modeling
-module bcd_to_7seg (input [4:0] bcd, output reg [6:0] seg );
+module bcd_to_7seg (input [5:0] bcd, output reg [7:0] seg );
 
     always @(bcd) begin
-        case (bcd)
-            5'b10000: seg = 7'b1111110; // 0
-            5'b10001: seg = 7'b0110000; // 1
-            5'b10010: seg = 7'b1101101; // 2
-            5'b10011: seg = 7'b1111001; // 3
-            5'b10100: seg = 7'b0110011; // 4
-            5'b10101: seg = 7'b1011011; // 5
-            5'b10110: seg = 7'b1011111; // 6
-            5'b10111: seg = 7'b1110000; // 7
-            5'b11000: seg = 7'b1111111; // 8
-            5'b11001: seg = 7'b1111011; // 9
-            default: seg = 7'b0000000; // Invalid input
+        casez (bcd)
+            6'b010000: seg = 8'b11111100; // 0
+            6'b010001: seg = 8'b01100000; // 1
+            6'b010010: seg = 8'b11011010; // 2
+            6'b010011: seg = 8'b11110010; // 3
+            6'b010100: seg = 8'b01100110; // 4
+            6'b010101: seg = 8'b10110110; // 5
+            6'b010110: seg = 8'b10111110; // 6
+            6'b010111: seg = 8'b11100000; // 7
+            6'b011000: seg = 8'b11111110; // 8
+            6'b011001: seg = 8'b11110110; // 9
+            6'b10????: seg = 8'b00000001; // 0
+            default: seg = 8'b00000000; // Invalid input
         endcase
     end
 
