@@ -211,7 +211,7 @@ module bcd_to_7seg (input [5:0] bcd, output reg [7:0] seg );
             6'b010111: seg = 8'b11100000; // 7
             6'b011000: seg = 8'b11111110; // 8
             6'b011001: seg = 8'b11110110; // 9
-            6'b10????: seg = 8'b00000001; // 0
+            6'b10????: seg = 8'b00000001; // decimal pt
             default: seg = 8'b00000000; // Invalid input
         endcase
     end
